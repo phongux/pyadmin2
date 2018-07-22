@@ -423,8 +423,12 @@ def application(environment, start_response):
 		        </label>
 	        </p>
 		    <div>
-	            <span id="exampleConsole" class="console">Click "Load" to load data from server </span> | 
-				<span class="page2">No page selected</span> 
+		        <span class="page2">No page selected</span> |
+	            <strong>
+	                <span id="exampleConsole" class="console">
+	                    Click "Load" to load data from server 
+	                </span>
+	            </strong> 
 	        </div>
 	        <div id="example1" style="width:100%; height: 500px; overflow: hidden"></div>
 	        <nav class="demo2"></nav>
@@ -708,6 +712,7 @@ def application(environment, start_response):
     //hot.updateSettings({{columns: [{{data:1}},{{data:2,type:"password"}},{{data:3}},{{data:4}},{{data:5}},{{data:6}}] }});
     
     function loadPage(page_num){{
+    
         $.ajax({{
             url: {loadurl},
             data: JSON.parse(
@@ -736,6 +741,8 @@ def application(environment, start_response):
                 }}
                 $console.text('Data loaded');
                 hot.loadData(data);
+                
+                if(page_num > Math.round(res.sum_page)){{ page_num = Math.round(res.sum_page)}}
                 $(".page2").html("<strong>Page <span id='page_number'>" + page_num + "</span> / <span id='total_page'>" + Math.round(res.sum_page)+"</span></strong>");
                 $('.demo2').bootpag({{
                     total: res.sum_page,
@@ -753,7 +760,40 @@ def application(environment, start_response):
                     prevClass: 'prev',
                     lastClass: 'last',
                     firstClass: 'first'
-                }})                
+                }}).on('page', function(event, num){{
+                    if(page_num > Math.round(res.sum_page)){{ page_num = Math.round(res.sum_page)}}
+                    $(".page2").html("<strong>Page <span id='page_number'>" + num + "</span> / <span id='total_page'>" + Math.round(res.sum_page)+"</span></strong>"/* + res.test */);
+                    $.ajax({{
+                        url: {loadurl},
+                        data: JSON.parse(
+                            JSON.stringify({{
+                                types:{str(types)},
+                                "page":num,
+                                "display":{display},
+                                table:"{table}",
+                                cols:{str(cols)},
+                                orderby:{str(orderby)},
+                                by:"{by}",
+                                filcols:{filcols}{send_data}{movecols},
+                                que:"{que_re}"}}
+                            )
+                        ),
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (res) {{
+                            var data = [], row;
+                            for (var i = 0, ilen = res.product.length; i < ilen; i++) {{
+                                row = [];
+                                for(var m in colu){{
+                                   row[m] = res.product[i][colu[m]];
+                                }}
+                                data[res.product[i].idha - 1] = row;
+                            }}
+                            $console.text('Data loaded');
+                            hot.loadData(data);
+                        }}
+                    }});
+                }})               
             }}
         }});    
     }};
