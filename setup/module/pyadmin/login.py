@@ -1,24 +1,24 @@
 import importlib,pyadmin.module
 importlib.reload(pyadmin.module)
 
-data = "%s/login_form"%pyadmin.module.project
-again = "%s/login_form_again"%pyadmin.module.project
-loginform = """<!doctype html>
+data = f"{pyadmin.module.project}/login_form"
+again = f"{pyadmin.module.project}/login_form_again"
+loginform = f"""<!doctype html>
 		<html>
 			<head>
-			<meta http-equiv="refresh" content="0; url=%s"/>
+			<meta http-equiv="refresh" content="0; url={data}"/>
                 <title> redirect login </title>
             </head>	
 		<body>
 		</body>
-	</html>"""%data
+	</html>"""
 
-login_again = """<!doctype html>
+login_again = f"""<!doctype html>
 		<html>
 			<head>
-			<meta http-equiv="refresh" content="0; url=%s"/>
+			<meta http-equiv="refresh" content="0; url={again}"/>
                 <title> redirect login </title>
             </head>	
 		<body>
 		</body>
-	</html>"""%again
+	</html>"""

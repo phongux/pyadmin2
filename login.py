@@ -52,15 +52,10 @@ def application(environ, start_response):
                     <!doctype html>
                     <html>
                             <head>
-                            <!--<meta http-equiv="refresh" content="0; url=/wsgi/pyadmin/index"/>-->
+                                <meta http-equiv="refresh" content="0; url=/wsgi/pyadmin/index"/>
                                 <title> redirect login </title>
                             </head>	
                         <body>
-                            <h1></h1>
-                            {environ}
-                            </br>
-                            {res}
-                            </br>
                         </body>
                     </html>"""
         else:
