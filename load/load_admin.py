@@ -1,7 +1,5 @@
 from beaker.middleware import SessionMiddleware
 import importlib
-
-
 def application(environment, start_response):
     from webob import Request, Response
     request = Request(environment)
@@ -10,10 +8,8 @@ def application(environment, start_response):
     res = Response()
     import pyadmin.login
     importlib.reload(pyadmin.login)
-
     # Get the session object from the environ
     session = environment['beaker.session']
-
     # Check to see if a value is in the session
     # user = 'username' in session
 
@@ -222,9 +218,6 @@ def application(environment, start_response):
                 #	objects_columns.append(c)
                 # columns = json.dumps(objects_columns)
                 # page += str(columns)
-
-
-
                 response = Response(body=page,
                                     content_type="application/json",
                                     charset="utf8",
@@ -236,7 +229,6 @@ def application(environment, start_response):
             cur.close()
             con.close()
     return response(environment, start_response)
-
 
 import pyadmin.sess
 

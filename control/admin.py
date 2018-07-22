@@ -189,9 +189,7 @@ def application(environment, start_response):
                     que = ""
                 if 'table' in params:
                     table = params.getall('table')[0]
-
                 colHeaders = [co.title().replace("_", " ") for co in cols]
-
                 cur.execute("select tablename,query from settings order by id")
                 lst = cur.fetchall()
                 ops = ""

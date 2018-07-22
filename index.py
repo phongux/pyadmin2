@@ -1,7 +1,6 @@
 from beaker.middleware import SessionMiddleware
 import importlib
 
-
 def application(environ, start_response):
     from webob import Request, Response
     # from datetime import datetime
@@ -10,7 +9,6 @@ def application(environ, start_response):
     import importlib, pyadmin.login
     importlib.reload(pyadmin.login)
     from pyadmin import login
-
 
     # Get the session object from the environ
     session = environ['beaker.session']
@@ -30,7 +28,6 @@ def application(environ, start_response):
     else:
         user = session['username']
         passwd = session['password']
-
         import psycopg2, hashlib, pyadmin.conn
         importlib.reload(pyadmin.conn)
         from pyadmin.conn import conn
@@ -38,7 +35,6 @@ def application(environ, start_response):
             con = psycopg2.connect(conn)
         except:
             page = "Can not access databases"
-
         cur = con.cursor()
         cur.execute(
             "select username,account_password,account_level from account where username=%s and account_password=%s ",
@@ -50,8 +46,6 @@ def application(environ, start_response):
             import pyadmin.module
             importlib.reload(pyadmin.module)
             from pyadmin.module import head, headlink, menuadmin, menuuser, menuhead, menufoot
-
-
             page = ""
             page += head + headlink
             page += "<title>home page</title>"
@@ -71,9 +65,7 @@ def application(environ, start_response):
             <br />
             <br />
             <br />"""
-
             page += """<p> You are successfully logged in !</p>"""
-
         con.commit()
         cur.close()
         con.close()
@@ -81,12 +73,9 @@ def application(environ, start_response):
         content_type="text/html",
         charset="utf8",
         status="200 OK")
-
     return response(environ, start_response)
-
 # Configure the SessionMiddleware
 import pyadmin.sess
-
 importlib.reload(pyadmin.sess)
 session_opts = pyadmin.sess.session_opts
 application = SessionMiddleware(application, session_opts)
