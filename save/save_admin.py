@@ -170,11 +170,12 @@ def application(environment, start_response):
     else:
         user = session['username']
         passwd = session['password']
+        captra = session['captra']
         con = get_connection()
         cur = con.cursor()
         cur.execute(
-            "select username,account_password,account_level from account where username=%s and account_password=%s ",
-            (user, passwd,))
+            "select username,account_password,account_level from account where username=%s and account_password=%s and captra=%s ",
+            (user, passwd, captra))
         ps = cur.fetchall()
         con.commit()
         cur.close()

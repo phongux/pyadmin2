@@ -1,5 +1,7 @@
 from beaker.middleware import SessionMiddleware
 import importlib
+import pyadmin.sess
+
 
 def application(environ, start_response):
     from webob import Request, Response
@@ -28,6 +30,7 @@ def application(environ, start_response):
     else:
         user = session['username']
         passwd = session['password']
+        captra = session['captra']
         import psycopg2, hashlib, pyadmin.conn
         importlib.reload(pyadmin.conn)
         from pyadmin.conn import conn
@@ -37,8 +40,8 @@ def application(environ, start_response):
             page = "Can not access databases"
         cur = con.cursor()
         cur.execute(
-            "select username,account_password,account_level from account where username=%s and account_password=%s ",
-            (user, passwd,))
+            "select username,account_password,account_level from account where username=%s and account_password=%s and captra=%s ",
+            (user, passwd, captra))
         ps = cur.fetchall()
         if len(ps) == 0:
             page = pyadmin.login.login_again
@@ -60,7 +63,7 @@ def application(environ, start_response):
             else:
                 page += menuuser
             page += menufoot
-            page += """						
+            page += """
             <br />
             <br />
             <br />
@@ -70,12 +73,13 @@ def application(environ, start_response):
         cur.close()
         con.close()
     response = Response(body=page,
-        content_type="text/html",
-        charset="utf8",
-        status="200 OK")
+                        content_type="text/html",
+                        charset="utf8",
+                        status="200 OK")
     return response(environ, start_response)
+
+
 # Configure the SessionMiddleware
-import pyadmin.sess
 importlib.reload(pyadmin.sess)
 session_opts = pyadmin.sess.session_opts
 application = SessionMiddleware(application, session_opts)
