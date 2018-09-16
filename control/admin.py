@@ -1,6 +1,20 @@
 from beaker.middleware import SessionMiddleware
-import importlib, re
-from datetime import datetime
+import importlib
+import re
+import psycopg2
+import pyadmin.module
+from pyadmin.module import head, headlink, menuadmin, menuuser, load, save, menuhead, menufoot
+from datetime import datetime, date
+import pyadmin.sess
+
+importlib.reload(pyadmin.sess)
+importlib.reload(pyadmin.module)
+
+
+def get_connection():
+    connection = psycopg2.connect(pyadmin.conn.conn)
+    return connection
+
 
 def application(environment, start_response):
     from webob import Request, Response
@@ -16,61 +30,43 @@ def application(environment, start_response):
     # Get the session object from the environ
     session = environment['beaker.session']
 
-    # Set some other session variable
-    # session['user_id'] = 10
-    # user_id = 'user_id' in session
-
-    if not 'username' in session:
+    if 'username' not in session:
         page = pyadmin.login.loginform
-    elif not 'password' in session:
+    elif 'password' not in session:
         page = pyadmin.login.loginform
     else:
         user = session['username']
         passwd = session['password']
-
-        import psycopg2, pyadmin.module
-        try:
-            con = psycopg2.connect(pyadmin.conn.conn)
-        except:
-            page = "Can not access databases"
-
+        con = get_connection()
         cur = con.cursor()
         cur.execute(
             "select username,account_password,account_level from account where username=%s and account_password=%s ",
             (user, passwd,))
         ps = cur.fetchall()
+        con.commit()
+        cur.close()
+        con.close()
         if len(ps) == 0:
             page = pyadmin.login.login_again
         else:
             if int(ps[0][2]) == 2:
-                importlib.reload(pyadmin.module)
-                from pyadmin.module import head, headlink, menuadmin, menuuser, load, save, menuhead, menufoot
-
-                from datetime import datetime, date
-                year_today = date.today().year
-                month_today = date.today().month
-                day_today = date.today().day
                 if not 'display' in post:
                     display = 200
                 else:
                     display = post['display']
-
-                if not 'hidecols' in post:
+                if 'hidecols' not in post:
                     hidecols = []
                 else:
                     hidecols = post.getall('hidecols')
-
-                if not 'hidefils' in post:
+                if 'hidefils' not in post:
                     hidefils = []
                 else:
                     hidefils = post.getall('hidefils')
-
-                if not 'orderby' in post:
+                if 'orderby' not in post:
                     orderby = ['1']
                 else:
                     orderby = post.getall('orderby')
-
-                if not 'by' in post:
+                if 'by' not in post:
                     by = 'asc'
                 else:
                     by = post['by']
@@ -78,19 +74,34 @@ def application(environment, start_response):
                 if 'table' in post:
                     if post['table'] != "":
                         table = post['table']
+                        con = get_connection()
+                        cur = con.cursor()
                         cur.execute(
                             f"select count(*) from information_schema.tables where table_name='{post['table']}' ")
                         check = cur.fetchone()
+                        con.commit()
+                        cur.close()
+                        con.close()
                         if check[0] > 0:
                             # table exists in database
+                            con = get_connection()
+                            cur = con.cursor()
                             cur.execute(f"select count(*) from {table} limit 1")
                             que = f"select *from {table} "
                             countrows = cur.fetchone()
+                            con.commit()
+                            cur.close()
+                            con.close()
                             if countrows[0] == 0:  # no records in table, table is empty
+                                con = get_connection()
+                                cur = con.cursor()
                                 cur.execute(
                                     f"select column_name, data_type from information_schema.columns "
                                     f"where table_name = '{post['table']}' ")
                                 rws = cur.fetchall()
+                                con.commit()
+                                cur.close()
+                                con.close()
                                 cols = [desc[0] for desc in rws if desc[0] not in hidecols]
                                 # colHeaders =[co.title().replace("_"," ") for co in cols]
                                 data_types = [desc[1] for desc in rws if desc[0] not in hidecols]
@@ -105,10 +116,15 @@ def application(environment, start_response):
                                     movecols = ""
                             # records in table, table is not empty
                             else:
+                                con = get_connection()
+                                cur = con.cursor()
                                 cur.execute(f"select * from {table} limit 1")
-                                que = f"select *from {table} "
                                 cols = [desc[0] for desc in cur.description if desc[0] not in hidecols]
                                 daty = cur.fetchone()
+                                con.commit()
+                                cur.close()
+                                con.close()
+                                que = f"select *from {table} "
                                 data_types = [type(val).__name__ for index, val in enumerate(daty)]
                                 colslist = [desc[0] for desc in cur.description]
                                 filcols = [fils for fils in cols if fils not in hidefils]
@@ -116,27 +132,51 @@ def application(environment, start_response):
                                     if len(post.getall('movecols')) != 0:
                                         movecols = f",movecols:{str(post.getall('movecols'))}"
                                         cols = [co for co in post.getall('movecols') if co not in hidecols]
-
+                                        con = get_connection()
+                                        cur = con.cursor()
                                         cur.execute(f"""select {",".join(cols)} from {table} limit 1""")
-                                        que = f"""select {",".join(cols)} from {table}"""
                                         colslist = [desc[0] for desc in cur.description]
+                                        con.commit()
+                                        cur.close()
+                                        con.close()
+                                        que = f"""select {",".join(cols)} from {table}"""
                                         filcols = [fils for fils in cols if fils not in hidefils]
                                 else:
                                     movecols = ""
                         else:  # table does not exits in database, only for query sql
                             table = post['table']
+                            con = get_connection()
+                            cur = con.cursor()
                             cur.execute(f"select count(*) from settings where tablename='{table}' ")
                             check2 = cur.fetchone()
+                            con.commit()
+                            cur.close()
+                            con.close()
                             if check2[0] > 0:
+                                con = get_connection()
+                                cur = con.cursor()
                                 cur.execute(f"select query from settings where tablename='{table}' limit 1")
                                 check3 = cur.fetchone()
+                                con.commit()
+                                cur.close()
+                                con.close()
+                                con = get_connection()
+                                cur = con.cursor()
                                 cur.execute(f"select count(*) from ({check3[0]}) as jotikaandmendaka")
                                 check5 = cur.fetchone()
+                                con.commit()
+                                cur.close()
+                                con.close()
                                 if check5[0] > 0:
+                                    con = get_connection()
+                                    cur = con.cursor()
                                     cur.execute(f"select * from ({check3[0]}) as jotikaandmendaka limit 1")
                                     que = check3[0]
                                     cols = [desc[0] for desc in cur.description if desc[0] not in hidecols]
                                     daty = cur.fetchone()
+                                    con.commit()
+                                    cur.close()
+                                    con.close()
                                     data_types = [type(val).__name__ for index, val in enumerate(daty)]
                                     colslist = [desc[0] for desc in cur.description]
                                     filcols = [fils for fils in cols if fils not in hidefils]
@@ -144,12 +184,17 @@ def application(environment, start_response):
                                         if len(post.getall('movecols')) > 0:
                                             movecols = f",movecols:{str(post.getall('movecols'))}"
                                             cols = [co for co in post.getall('movecols') if co not in hidecols]
+                                            con = get_connection()
+                                            cur = con.cursor()
                                             cur.execute(
                                                 f"""select {",".join(cols)} from ({check3[0]} 
                                                 as jotikaandmendaka limit 1"""
                                             )
                                             que = check3[0]
                                             colslist = [desc[0] for desc in cur.description]
+                                            con.commit()
+                                            cur.close()
+                                            con.close()
                                             filcols = [fils for fils in cols if fils not in hidefils]
 
                                     else:  # no row in query
@@ -190,8 +235,13 @@ def application(environment, start_response):
                 if 'table' in params:
                     table = params.getall('table')[0]
                 colHeaders = [co.title().replace("_", " ") for co in cols]
+                con = get_connection()
+                cur = con.cursor()
                 cur.execute("select tablename,query from settings order by id")
                 lst = cur.fetchall()
+                con.commit()
+                cur.close()
+                con.close()
                 ops = ""
                 for ls in lst:
                     # ops += "<option value='%s'>"%l[0]
@@ -801,17 +851,9 @@ def application(environment, start_response):
     </html>"""
             else:
                 page = pyadmin.login.login_again
-        con.commit()
-        cur.close()
-        con.close()
-    # request.headers['Cookie']
-    response = Response(body=page,
-                        content_type="text/html",
-                        charset="utf8",
-                        status="200 OK")
+    response = Response(body=page, content_type="text/html", charset="utf8", status="200 OK")
     return response(environment, start_response)
-# Configure the SessionMiddleware
-import pyadmin.sess
-importlib.reload(pyadmin.sess)
+
+
 session_opts = pyadmin.sess.session_opts
 application = SessionMiddleware(application, session_opts)
