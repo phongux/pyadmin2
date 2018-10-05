@@ -3,12 +3,13 @@ import importlib
 import re
 import psycopg2
 import pyadmin.module
-from pyadmin.module import head, headlink, menuadmin, menuuser, load, save, menuhead, menufoot
 from datetime import datetime, date
 import pyadmin.sess
-
+import pyadmin.conn, pyadmin.login
+importlib.reload(pyadmin.conn)
+importlib.reload(pyadmin.login)
 importlib.reload(pyadmin.sess)
-importlib.reload(pyadmin.module)
+from pyadmin.module import head, headlink, menuadmin, menuuser, load, save, menuhead, menufoot
 
 
 def get_connection():
@@ -23,9 +24,7 @@ def application(environment, start_response):
     post = request.POST
     res = Response()
 
-    import pyadmin.conn, pyadmin.login
-    importlib.reload(pyadmin.conn)
-    importlib.reload(pyadmin.login)
+
 
     # Get the session object from the environ
     session = environment['beaker.session']
@@ -364,7 +363,7 @@ def application(environment, start_response):
 				    <ul class="nav nav-tabs">
 						<li class="active"><a href="{pyadmin.module.control}/account_manager">{table}</a></li>
 					</ul>
-					<h2>Table  {table} </h2>
+					<h2>Table {table} </h2>
     				Order by: {",".join(orderby)}. Sort by: {by}. Hide columns: {",".join(hidecols)}	
     				| Hide filter: {",".join(hidefils)} + {movecols}  
     				<br />

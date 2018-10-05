@@ -1,0 +1,39 @@
+create table if not exists dmkh(id serial8 primary key,
+						stt int,
+								ma_kh text unique,
+								ten_kh text,
+								sdt text,
+								dia_chi text,
+								note text,
+								created_time timestamp default now(),
+								update_time timestamp default now()
+				 );
+create table if not exists dmhh(id serial8 primary key,
+							   stt int,
+							   ma_hh text,
+							   ten_hang text,
+							   dvt text,
+							   so_luong numeric,
+							   don_gia numeric,
+							   note text,
+							   created_time timestamp default now(),
+							   update_time timestamp default now()
+							   );
+--drop table theo_doi;							   
+create table if not exists theo_doi(
+id serial8 primary key,
+stt int,
+phieu_so text unique,
+ngay timestamp,
+ma_kh text,
+ten_kh text,
+so_dt text,
+ma_hh text,
+ten_hang text,
+dvt text,
+so_luong numeric,
+don_gia numeric,
+thanh_tien numeric,
+ghi_chu text,
+created_time timestamp default now(),
+update_time timestamp default now());							   

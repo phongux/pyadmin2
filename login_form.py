@@ -60,6 +60,7 @@ def application(environment, start_response):
                         </form>
                     </div>
                     <div class="modal-footer">
+                    <a href='/wsgi/pyadmin/register_form'>Register</a>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->		

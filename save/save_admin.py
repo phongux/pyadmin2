@@ -119,8 +119,8 @@ def insert_row(i, table, post, types, inscols):
 def delete_check(post, table):
     if 'delete[]' in post:
         with ThreadPoolExecutor(max_workers=5) as executor:
-            futures = {executor.submit(delete_row, table, rowid) for rowid in
-                       list(post.getall('delete[]')) if rowid != ''}
+            futures = [executor.submit(delete_row, table, rowid) for rowid in
+                       list(post.getall('delete[]')) if rowid != '']
             wait(futures)
 
 
@@ -128,17 +128,17 @@ def update_check(post, table, types):
     if 'lenupdate' in post:
         if int(post['lenupdate']) > 0:
             with ThreadPoolExecutor(max_workers=5) as executor:
-                futures = {executor.submit(update_row, i, table, post, types) for i in
-                           range(int(post['lenupdate']))}
+                futures = [executor.submit(update_row, i, table, post, types) for i in
+                           range(int(post['lenupdate']))]
                 wait(futures)
 
 
 def insert_check(post, table, types, inscols):
     if 'leninsert' in post:
         if int(post['leninsert']) > 0:
-            with ThreadPoolExecutor(max_workers=5) as executor:
-                futures = {executor.submit(insert_row, i, table, post, types, inscols) for i in
-                           range(int(post['leninsert']))}
+            with ThreadPoolExecutor(max_workers=1) as executor:
+                futures = [executor.submit(insert_row, i, table, post, types, inscols) for i in
+                           range(int(post['leninsert']))]
                 wait(futures)
 
 
@@ -221,10 +221,10 @@ def application(environment, start_response):
                     page = ""
                     errors = ""
                     with ThreadPoolExecutor(max_workers=5) as executor:
-                        futures = {executor.submit(delete_check, post, table),
+                        futures = [executor.submit(delete_check, post, table),
                                    executor.submit(update_check, post, table, types),
                                    executor.submit(insert_check, post, table, types, inscols)
-                                   }
+                                   ]
                         wait(futures)
                     page = """{"result":"ok"}"""
                     response = Response(body=page,
