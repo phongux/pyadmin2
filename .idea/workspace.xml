@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c39422a-5ec4-47af-a28d-ae2b30f865e8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/control/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/register_form.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/control/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/control/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/login_form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/save/save_admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/save/save_admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/load/load_admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/load/load_admin.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/pyadmin$load_tracnghiem_riasec.coverage" NAME="load_tracnghiem_riasec Coverage Results" MODIFIED="1538820576647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/load" />
     <SUITE FILE_PATH="coverage/pyadmin$index.coverage" NAME="index Coverage Results" MODIFIED="1538583553836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pyadmin$fb_save_link_api.coverage" NAME="fb_save_link_api Coverage Results" MODIFIED="1535781246987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/save" />
   </component>
@@ -23,65 +20,60 @@
     <session id="1809750357">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="11" />
+          <entry key="project.closed" value="12" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.101" value="1" />
           <entry key="project.open.time.107" value="1" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.114" value="1" />
+          <entry key="project.open.time.115" value="1" />
           <entry key="project.open.time.117" value="1" />
           <entry key="project.open.time.138" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.77" value="1" />
-          <entry key="project.open.time.84" value="1" />
+          <entry key="project.open.time.84" value="2" />
           <entry key="project.open.time.89" value="1" />
-          <entry key="project.opened" value="15" />
+          <entry key="project.open.time.91" value="1" />
+          <entry key="project.opened" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="md" value="1" />
-          <entry key="py" value="23" />
+          <entry key="py" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Markdown" value="1" />
-          <entry key="Python" value="23" />
+          <entry key="Python" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="439" />
-          <entry key="py" value="4920" />
+          <entry key="dummy" value="30" />
+          <entry key="py" value="5578" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="5359" />
+          <entry key="PLAIN_TEXT" value="30" />
+          <entry key="Python" value="6017" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/register_form.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="44" column="54" selection-start-line="44" selection-start-column="54" selection-end-line="44" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/register.py">
+        <entry file="file://$PROJECT_DIR$/control/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1054">
-              <caret line="66" column="137" selection-start-line="66" selection-start-column="137" selection-end-line="66" selection-end-column="137" />
+            <state relative-caret-position="8613">
+              <caret line="340" column="46" selection-start-line="340" selection-start-column="46" selection-end-line="340" selection-end-column="46" />
               <folding>
                 <element signature="e#0#47#0" expanded="true" />
               </folding>
@@ -90,27 +82,41 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/pyadmin/module.py">
+        <entry file="file://$PROJECT_DIR$/control/tracnghiem_riasec.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3942">
-              <caret line="150" column="24" lean-forward="true" selection-start-line="150" selection-start-column="23" selection-end-line="150" selection-end-column="31" />
+            <state relative-caret-position="6427">
+              <caret line="334" column="39" lean-forward="true" selection-start-line="334" selection-start-column="39" selection-end-line="334" selection-end-column="39" />
               <folding>
-                <element signature="e#0#30#0" expanded="true" />
+                <element signature="e#0#47#0" expanded="true" />
+                <marker date="1538818812256" expanded="true" signature="533:850" ph="..." />
+                <marker date="1538818812256" expanded="true" signature="895:900" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/control/__init__.py">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/login.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2186">
+              <caret line="84" column="34" selection-start-line="84" selection-start-column="33" selection-end-line="84" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
+                <marker date="1537099032412" expanded="true" signature="236:475" ph="..." />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/control/admin.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/load/load_tracnghiem_riasec.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="4" column="21" lean-forward="true" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+            <state relative-caret-position="-1108">
+              <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+              <folding>
+                <marker date="1538820960914" expanded="true" signature="644:1492" ph="..." />
+                <marker date="1538820960914" expanded="true" signature="1537:1542" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -118,29 +124,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/load/load_admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1485">
-              <caret line="63" column="6" selection-start-line="63" selection-end-line="65" selection-end-column="35" />
+            <state relative-caret-position="584">
+              <caret line="144" column="16" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="49" />
               <folding>
                 <element signature="e#0#69#0" expanded="true" />
-                <marker date="1537096819413" expanded="true" signature="363:1156" ph="..." />
-                <marker date="1537096819413" expanded="true" signature="471:1156" ph="..." />
+                <marker date="1538820427953" expanded="true" signature="363:1156" ph="..." />
+                <marker date="1538820427953" expanded="true" signature="471:1156" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/save/save_admin.py">
+        <entry file="file://$PROJECT_DIR$/save/save_tracnghiem_riasec.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3024">
-              <caret line="121" column="23" selection-start-line="121" selection-start-column="23" selection-end-line="121" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#69#0" expanded="true" />
-                <marker date="1538672185219" expanded="true" signature="691:6460" ph="..." />
-                <marker date="1538672185219" expanded="true" signature="3601:6460" ph="..." />
-                <marker date="1538672185219" expanded="true" signature="5787:6460" ph="..." />
-                <marker date="1538672185219" expanded="true" signature="6142:6460" ph="..." />
-              </folding>
+            <state relative-caret-position="728">
+              <caret line="191" column="27" selection-start-line="191" selection-start-column="27" selection-end-line="191" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -172,7 +171,6 @@
         <option value="$PROJECT_DIR$/login_form_again.py" />
         <option value="$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/pyadmin/login.py" />
         <option value="$PROJECT_DIR$/save/fb_save_link_api.py" />
-        <option value="$PROJECT_DIR$/load/load_admin.py" />
         <option value="$PROJECT_DIR$/login.py" />
         <option value="$PROJECT_DIR$/index.py" />
         <option value="$PROJECT_DIR$/login_form.py" />
@@ -183,6 +181,11 @@
         <option value="$PROJECT_DIR$/save/save_admin.py" />
         <option value="$PROJECT_DIR$/register.py" />
         <option value="$PROJECT_DIR$/register_form.py" />
+        <option value="$PROJECT_DIR$/control/view.py" />
+        <option value="$PROJECT_DIR$/save/save_tracnghiem_riasec.py" />
+        <option value="$PROJECT_DIR$/control/tracnghiem_riasec.py" />
+        <option value="$PROJECT_DIR$/load/load_admin.py" />
+        <option value="$PROJECT_DIR$/load/load_tracnghiem_riasec.py" />
       </list>
     </option>
   </component>
@@ -204,7 +207,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -231,6 +233,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -239,12 +242,14 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\wsgi\pyadmin\control" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\wsgi\pyadmin\save" />
+      <recent name="D:\wsgi\pyadmin\load" />
       <recent name="D:\wsgi\pyadmin\control" />
       <recent name="D:\wsgi\pyadmin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\wsgi\pyadmin\control" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -259,7 +264,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.index">
+  <component name="RunManager" selected="Python.load_tracnghiem_riasec">
     <configuration name="fb_save_link_api" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="pyadmin" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -304,12 +309,36 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="load_tracnghiem_riasec" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="pyadmin" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/load" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/load/load_tracnghiem_riasec.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.fb_save_link_api" />
       <item itemvalue="Python.index" />
+      <item itemvalue="Python.load_tracnghiem_riasec" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.load_tracnghiem_riasec" />
         <item itemvalue="Python.index" />
         <item itemvalue="Python.fb_save_link_api" />
       </list>
@@ -332,7 +361,7 @@
     <frame x="-4" y="-4" width="1928" height="1044" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14935064" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.08279221" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -354,6 +383,29 @@
       <window_info anchor="right" id="SciView" order="3" />
       <window_info anchor="right" id="Database" order="4" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.08279221" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.5538642" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.06791569" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.22131148" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -377,6 +429,16 @@
           <url>file://$PROJECT_DIR$/login.py</url>
           <line>30</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/load/load_tracnghiem_riasec.py</url>
+          <line>28</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/load/load_tracnghiem_riasec.py</url>
+          <line>83</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -462,13 +524,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/login.py">
+    <entry file="file://$PROJECT_DIR$/register_form.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-          <folding>
-            <marker date="1537099032412" expanded="true" signature="236:475" ph="..." />
-          </folding>
+        <state relative-caret-position="1107">
+          <caret line="44" column="54" selection-start-line="44" selection-start-column="54" selection-end-line="44" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -476,62 +535,86 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3942">
           <caret line="150" column="24" lean-forward="true" selection-start-line="150" selection-start-column="23" selection-end-line="150" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/control/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/load/load_admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1485">
-          <caret line="63" column="6" selection-start-line="63" selection-end-line="65" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#69#0" expanded="true" />
-            <marker date="1537096819413" expanded="true" signature="363:1156" ph="..." />
-            <marker date="1537096819413" expanded="true" signature="471:1156" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/save/save_admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3024">
           <caret line="121" column="23" selection-start-line="121" selection-start-column="23" selection-end-line="121" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#69#0" expanded="true" />
-            <marker date="1538672185219" expanded="true" signature="691:6460" ph="..." />
-            <marker date="1538672185219" expanded="true" signature="3601:6460" ph="..." />
-            <marker date="1538672185219" expanded="true" signature="5787:6460" ph="..." />
-            <marker date="1538672185219" expanded="true" signature="6142:6460" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/control/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="4" column="21" lean-forward="true" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/register.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1054">
+        <state relative-caret-position="728">
           <caret line="66" column="137" selection-start-line="66" selection-start-column="137" selection-end-line="66" selection-end-column="137" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/control/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8613">
+          <caret line="340" column="46" selection-start-line="340" selection-start-column="46" selection-end-line="340" selection-end-column="46" />
           <folding>
             <element signature="e#0#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register_form.py">
+    <entry file="file://$PROJECT_DIR$/login.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="44" column="54" selection-start-line="44" selection-start-column="54" selection-end-line="44" selection-end-column="54" />
+        <state relative-caret-position="2186">
+          <caret line="84" column="34" selection-start-line="84" selection-start-column="33" selection-end-line="84" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+            <marker date="1537099032412" expanded="true" signature="236:475" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/save/save_tracnghiem_riasec.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="728">
+          <caret line="191" column="27" selection-start-line="191" selection-start-column="27" selection-end-line="191" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/load/load_admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="584">
+          <caret line="144" column="16" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#69#0" expanded="true" />
+            <marker date="1538820427953" expanded="true" signature="363:1156" ph="..." />
+            <marker date="1538820427953" expanded="true" signature="471:1156" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/control/tracnghiem_riasec.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6427">
+          <caret line="334" column="39" lean-forward="true" selection-start-line="334" selection-start-column="39" selection-end-line="334" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+            <marker date="1538818812256" expanded="true" signature="533:850" ph="..." />
+            <marker date="1538818812256" expanded="true" signature="895:900" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/load/load_tracnghiem_riasec.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1108">
+          <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+          <folding>
+            <marker date="1538820960914" expanded="true" signature="644:1492" ph="..." />
+            <marker date="1538820960914" expanded="true" signature="1537:1542" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
