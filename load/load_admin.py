@@ -205,7 +205,6 @@ def application(environment, start_response):
                             row.append(list(ro))
                         page = '{"product":'
                         objects_list = []
-                        cols = ["id,ma_cau_hoi,cau_hoi"]
                         with ThreadPoolExecutor(max_workers=5) as executor:
                             # Start the load operations and mark each future with its URL
                             futures = [executor.submit(convert_row, i, row, cols) for i in range(len(row))]

@@ -31,13 +31,11 @@ def get_account(user, passwd, captra):
     con.close()
     return ps
 
-
 def insert_answer(user):
-    ma_dethi = f"{user}{time.time()}"
+    ma_de_thi = f"{user}{time.time()}"
     con = get_connection()
     cur = con.cursor()
-    cur.execute(
-        f"insert into tra_loi_riasec(ma_dethi,ma_cau_hoi,account) select '{ma_dethi}' as ma_dethi,ma_cau_hoi,'{user}' as account from cau_hoi_riasec  order by id ")
+    cur.execute(f"insert into tra_loi_neo(ma_de_thi,ma_cau_hoi,account) select '{ma_de_thi}' as ma_de_thi,ma_cau_hoi,'{user}' as account from cau_hoi_neo  order by id ")
     con.commit()
     cur.close()
     con.close()
@@ -46,24 +44,20 @@ def insert_answer(user):
 def delete_answer(user):
     con = get_connection()
     cur = con.cursor()
-    cur.execute(f"delete from tra_loi_riasec where account=%s", (user,))
+    cur.execute(f"delete from tra_loi_neo where account=%s ",(user,))
     con.commit()
     cur.close()
     con.close()
 
-
 def get_ma_phieu(user):
     con = get_connection()
     cur = con.cursor()
-    cur.execute(
-        f"select ma_dethi,account,status from tra_loi_riasec group by ma_dethi,account,status having account=%s and status is null limit 1",
-        (user,))
+    cur.execute(f"select ma_de_thi,account,status from tra_loi_neo group by ma_de_thi,account,status having account=%s and status is null limit 1",(user,))
     row = cur.fetchall()
     con.commit()
     cur.close()
     con.close()
     return row
-
 
 def application(environment, start_response):
     from webob import Request, Response
@@ -83,6 +77,10 @@ def application(environment, start_response):
         user = session['username']
         passwd = session['password']
         captra = session['captra']
+        birthday = session['birthday']
+        gender = session['gender']
+        depart = session['depart']
+        company = session['company']
         ps = get_account(user, passwd, captra)
         if int(ps[0][2]) > 0:
             delete_answer(user)
@@ -93,11 +91,11 @@ def application(environment, start_response):
                 display = 200
             else:
                 display = post['display']
-            saveurl = f"""'{save}/save_trac_nghiem_riasec'"""
-            loadurl = f"""'{load}/load_trac_nghiem_riasec'"""
+            saveurl = f"""'{save}/save_sang_loc_tam_benh_hoc'"""
+            loadurl = f"""'{load}/load_sang_loc_tam_benh_hoc'"""
             page = ""
             page += head
-            page += "<title>RIASEC</title>"
+            page += "<title>Sàng lọc tâm bệnh học</title>"
             page += headlink
             page += """
                 </head>
@@ -111,10 +109,15 @@ def application(environment, start_response):
             # for in this case need add more filter duplicate row in table home;
             page += f"""
                 <br /><br /><br />
-                <h2>Trac nghiem RIASEC </h2>
+                <h2>PHIẾU HỎI THÔNG TIN</h2>
+				<p>Mã phiếu:{ma_phieu} </br>
+Chào các em!
+Chúng tôi đang tìm hiểu về những khó khăn tâm lý của học sinh trung học phổ thông. Những ý kiến của các em sẽ là đóng góp quý báu giúp chúng tôi thực hiện đề tài nghiên cứu này. Chúng tôi xin đảm bảo những thông tin thu thập được từ các em sẽ hoàn toàn được giữ bí mật và chỉ phục vụ cho nghiên cứu khoa học. Cám ơn sự giúp đỡ của các em rất nhiều!
+</p>			<p><b>A. Thông tin cá nhân</b>
                 <p> Account : {user} </p>
-                <p> Mã phiếu : {ma_phieu} </p>
-				<p> Hướng dẫn: tích chọn vào ô tích trong phần cột trả lời. Sau khi làm xong bạn vào phần menu module RIASEC . chon xem kết quả.</p>
+				<p> Giới tính: {gender}  , Năm sinh: {birthday} </p>
+				<p> Lớp: {depart}  Trường: {company}
+                
                 <br />
         <p>
             <button name="load" id="load_dog">Load</button>
@@ -157,7 +160,7 @@ def application(environment, start_response):
         colHeaders: ["Id","Mã câu hỏi","Câu hỏi","Trả lời"],
         columns: [{{readOnly: true}},{{readOnly: true}},{{readOnly: true}},
         {{    
-            type: 'checkbox'
+            type: 'dropdown',source:['Hoàn toàn sai','Sai','Không đúng cũng không sai','Đúng','Hoàn toàn đúng']
         }}],
         //colWidths: [0.1,50,200,50,50,50,50],		
         manualColumnResize: true,

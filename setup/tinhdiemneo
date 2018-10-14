@@ -1,0 +1,32 @@
+  select ten_nhom,k.thang_do, dien_giai from (select case when sum < thap 
+  then 'thap'
+  when thap < sum and sum < cao 
+  then 'trung_binh'
+  else 'cao'
+  end as thang_do,nhom_cau_hoi from(select nhom_cau_hoi ,gender,sum(diem_so) from (select nhom_cau_hoi,nhom_diem, tra_loi,gender from (select nhom_cau_hoi,nhom_diem,tra_loi,account from (select nhom_cau_hoi ,ma_cau_hoi,nhom_diem from cau_hoi_neo ) as a
+     left outer join
+    (select ma_cau_hoi,tra_loi,account from tra_loi_neo) as b on a.ma_cau_hoi = b.ma_cau_hoi ) as c
+   left outer join
+     (select username,gender from account) as d on c.account = d.username) as e
+     left outer join
+     (select *from quy_doi_diem) as f on e.tra_loi = f.tra_loi and e.nhom_diem = f.nhom
+   group by nhom_cau_hoi,gender order by sum desc limit 1) as g
+  left outer join 
+  (select *from bang_nhan_cach ) as h 
+  on g.gender = h.gender and g.nhom_cau_hoi = h.ma_nhom) as k
+  left outer join
+  (select ten_nhom, ma_nhom,thang_do,dien_giai from dien_giai_neo ) as l 
+  on l.thang_do = k.thang_do and k.nhom_cau_hoi = l.ma_nhom
+
+-- create table quy_doi_diem(
+-- id serial8 primary key,
+-- tra_loi text,
+-- diem_so int,
+-- nhom text,
+-- update_time timestamp default now()
+-- )
+-- select *from cau_hoi_neo limit 1;
+-- alter table cau_hoi_neo drop column update_time;
+-- alter table cau_hoi_neo drop column note;
+-- alter table cau_hoi_neo add column nhom_diem text;
+-- alter table cau_hoi_neo add column update_time timestamp default now();

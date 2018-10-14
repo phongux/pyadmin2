@@ -18,11 +18,21 @@ def get_conection():
     return connection
 
 
-def convert_row(i, row):
+def convert_row(i, row, cols):
     d = collections.OrderedDict()
     d['idha'] = i + 1  # row[0]
-    for j in range(len(o)):
-        d[cols[j]] = row[i][j]
+    for j in range(len(cols)):
+        if type(row[i][j]).__name__ == 'datetime' or type(row[i][j]).__name__ == 'date':
+            d[cols[j]] = str(row[i][j])
+        elif type(row[i][j]).__name__ == 'float':
+            d[cols[j]] = str(round(row[i][j], 9))
+        elif type(row[i][j]).__name__ == 'Decimal':
+            d[cols[j]] = str(row[i][j])
+        elif type(row[i][j]).__name__ == 'dict' or type(row[i][j]).__name__ == 'list':
+            d[cols[j]] = json.dumps(row[i][j], ensure_ascii=False).encode('utf8').decode(
+                'utf-8')
+        else:
+            d[cols[j]] = row[i][j]
     return d
 
 
@@ -39,10 +49,10 @@ def get_account(user, passwd, captra):
     return ps
 
 
-def count_rows():
+def count_rows(user):
     con = get_conection()
     cur = con.cursor()
-    cur.execute(f"""select count(*) from {table} """)
+    cur.execute(f"""select count(*) from tra_loi_riasec where account=%s""", (user,))
     rows_count = cur.fetchone()
     con.commit()
     cur.close()
@@ -50,11 +60,13 @@ def count_rows():
     return rows_count
 
 
-def get_rows(display, start_w):
+def get_rows(display, start_w, user):
     con = get_conection()
     cur = con.cursor()
     cur.execute(
-        f"""select id,ma_cau_hoi,cau_hoi from trac_nghiem_riasec order by id limit {display} offset {start_w} """)
+        f"""select b.id,b.ma_cau_hoi,a.cau_hoi,b.tra_loi from (select ma_cau_hoi,cau_hoi from cau_hoi_riasec) as a left outer join
+(select id, ma_cau_hoi,tra_loi from tra_loi_riasec where account=%s) as b
+on a.ma_cau_hoi = b.ma_cau_hoi order by b.id limit {display} offset {start_w}""", (user,))
     rows = cur.fetchall()
     con.commit()
     cur.close()
@@ -80,6 +92,7 @@ def application(environment, start_response):
         user = session['username']
         passwd = session['password']
         captra = session['captra']
+        table = 'cau_hoi_riasec'
         ps = get_account(user, passwd, captra)
         if ps[0][2] > 0:
             if 'display' not in post:
@@ -91,17 +104,17 @@ def application(environment, start_response):
             else:
                 page = post['page']
             start_w = (int(page) - 1) * display
-            rows_count = count_rows()
-            rows = get_rows(display, start_w)
+            rows_count = count_rows(user)
+            rows = get_rows(display, start_w, user)
             sum_page = (int(rows_count[0]) / display) + 1
             row = []
             for ro in rows:
                 row.append(list(ro))
             page = '{"product":'
             objects_list = []
+            cols = ["id", "ma_cau_hoi", "cau_hoi", "tra_loi"]
             with ThreadPoolExecutor(max_workers=1) as executor:
-                # Start the load operations and mark each future with its URL
-                futures = [executor.submit(convert_row, i, row) for i in range(len(row))]
+                futures = [executor.submit(convert_row, i, row, cols) for i in range(len(row))]
                 for future in as_completed(futures):
                     try:
                         objects_list.append(future.result())

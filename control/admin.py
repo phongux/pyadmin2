@@ -550,7 +550,7 @@ def application(environment, start_response):
 		    rowHeaders: true,
             colHeaders: {str(colHeaders)},
             columns: {str(columns)},
-            colWidths: [0.1,50,200,50,50,50,50],		
+            colWidths: [0.1,50,50,50,50,50,50],		
             manualColumnResize: true,
             manualRowResize: true,		
             autoColumnSize : true,

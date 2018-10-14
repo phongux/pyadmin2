@@ -7,6 +7,11 @@ import psycopg2.extras
 import psycopg2.extensions
 import hashlib
 import pyadmin.conn
+import pyadmin.sess
+
+importlib.reload(pyadmin.sess)
+importlib.reload(pyadmin.conn)
+from pyadmin.conn import conn
 
 
 def update_captra(captra, user, passwd):
@@ -16,6 +21,19 @@ def update_captra(captra, user, passwd):
     conn.commit()
     cur.close()
     conn.close()
+
+
+def get_account(user, passwd):
+    con = psycopg2.connect(conn)
+    cur = con.cursor()
+    cur.execute(
+        "select username,account_password,account_level,gender,company,depart,birthday from account where username=%s and account_password=%s ",
+        (user, hashlib.sha512(passwd.encode('utf-8')).hexdigest(),))
+    ps = cur.fetchall()
+    con.commit()
+    cur.close()
+    con.close()
+    return ps
 
 
 def application(environ, start_response):
@@ -46,26 +64,16 @@ def application(environ, start_response):
         user = post['username']
         passwd = post['password']
         if res['success'] == True:
-            importlib.reload(pyadmin.conn)
-            from pyadmin.conn import conn
-            try:
-                con = psycopg2.connect(conn)
-            except:
-                page = "Can not access databases"
-
-            cur = con.cursor()
-            cur.execute(
-                "select username,account_password,account_level from account where username=%s and account_password=%s ",
-                (user, hashlib.sha512(passwd.encode('utf-8')).hexdigest(),))
-            ps = cur.fetchall()
-            con.commit()
-            cur.close()
-            con.close()
+            ps = get_account(user, passwd)
             if len(ps) == 0:
                 page = f"{pyadmin.login.login_form}"
             else:
                 session['username'] = user
                 session['password'] = hashlib.sha512(passwd.encode('utf-8')).hexdigest()
+                session['gender'] = ps[0][3]
+                session['company'] = ps[0][4]
+                session['depart'] = ps[0][5]
+                session['birthday'] = ps[0][6]
                 session['captra'] = post['g-recaptcha-response']
                 update_captra(post['g-recaptcha-response'], user, hashlib.sha512(passwd.encode('utf-8')).hexdigest())
                 session.save()
@@ -91,8 +99,6 @@ def application(environ, start_response):
 
 
 # Configure the SessionMiddleware
-import pyadmin.sess
 
-importlib.reload(pyadmin.sess)
 session_opts = pyadmin.sess.session_opts
 application = SessionMiddleware(application, session_opts)
