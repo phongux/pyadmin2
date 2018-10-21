@@ -35,7 +35,7 @@ def insert_answer(user):
     ma_de_thi = f"{user}{time.time()}"
     con = get_connection()
     cur = con.cursor()
-    cur.execute(f"insert into tra_loi_neo(ma_de_thi,ma_cau_hoi,account) select '{ma_de_thi}' as ma_de_thi,ma_cau_hoi,'{user}' as account from cau_hoi_neo  order by id ")
+    cur.execute(f"insert into tra_loi_sang_loc_tam_ly(ma_de_thi,ma_cau_hoi,account) select '{ma_de_thi}' as ma_de_thi,ma_cau_hoi,'{user}' as account from cau_hoi_sang_loc_tam_ly  order by id ")
     con.commit()
     cur.close()
     con.close()
@@ -44,7 +44,7 @@ def insert_answer(user):
 def delete_answer(user):
     con = get_connection()
     cur = con.cursor()
-    cur.execute(f"delete from tra_loi_neo where account=%s ",(user,))
+    cur.execute(f"delete from tra_loi_sang_loc_tam_ly where account=%s ",(user,))
     con.commit()
     cur.close()
     con.close()
@@ -52,7 +52,7 @@ def delete_answer(user):
 def get_ma_phieu(user):
     con = get_connection()
     cur = con.cursor()
-    cur.execute(f"select ma_de_thi,account,status from tra_loi_neo group by ma_de_thi,account,status having account=%s and status is null limit 1",(user,))
+    cur.execute(f"select ma_de_thi,account,status from tra_loi_sang_loc_tam_ly group by ma_de_thi,account,status having account=%s and status is null limit 1",(user,))
     row = cur.fetchall()
     con.commit()
     cur.close()
@@ -62,10 +62,7 @@ def get_ma_phieu(user):
 def application(environment, start_response):
     from webob import Request, Response
     request = Request(environment)
-    params = request.params
     post = request.POST
-    res = Response()
-
     # Get the session object from the environ
     session = environment['beaker.session']
 
@@ -111,18 +108,20 @@ def application(environment, start_response):
                 <br /><br /><br />
                 <h2>PHIẾU HỎI THÔNG TIN</h2>
 				<p>Mã phiếu:{ma_phieu} </br>
-Chào các em!
-Chúng tôi đang tìm hiểu về những khó khăn tâm lý của học sinh trung học phổ thông. Những ý kiến của các em sẽ là đóng góp quý báu giúp chúng tôi thực hiện đề tài nghiên cứu này. Chúng tôi xin đảm bảo những thông tin thu thập được từ các em sẽ hoàn toàn được giữ bí mật và chỉ phục vụ cho nghiên cứu khoa học. Cám ơn sự giúp đỡ của các em rất nhiều!
-</p>			<p><b>A. Thông tin cá nhân</b>
+                    Chào các em!
+                    Chúng tôi đang tìm hiểu về những khó khăn tâm lý của học sinh trung học phổ thông. Những ý kiến của các em sẽ là đóng góp quý báu giúp chúng tôi thực hiện đề tài nghiên cứu này. Chúng tôi xin đảm bảo những thông tin thu thập được từ các em sẽ hoàn toàn được giữ bí mật và chỉ phục vụ cho nghiên cứu khoa học. Cám ơn sự giúp đỡ của các em rất nhiều!
+                </p>			
+                <p><b>A. Thông tin cá nhân</b>
                 <p> Account : {user} </p>
 				<p> Giới tính: {gender}  , Năm sinh: {birthday} </p>
 				<p> Lớp: {depart}  Trường: {company}
-                
-                <br />
-        <p>
-            <button name="load" id="load_dog">Load</button>
-            <button name="reset">Reset</button>
-            <label>
+                <p><b> B. Các khó khăn tâm lý </b></p>
+                    <b><i>Dưới đây là những câu hỏi về các khó khăn mà em gặp phải trong sáu tháng vừa qua. Em hãy điền đáp án phù hợp với em nhất.(Điền số vào cột trả lời)</i></b>
+                </p>
+                <p>
+                <button name="load" id="load_dog">Load</button>
+                <button name="reset">Reset</button>
+                <label>
                 <input id="autosave" type="checkbox" name="autosave" checked="checked" autocomplete="off">
                 Autosave
             </label>
@@ -137,9 +136,10 @@ Chúng tôi đang tìm hiểu về những khó khăn tâm lý của học sinh 
         </div>
         <div id="example1" style="width:100%; height: 500px; overflow: hidden"></div>
         <nav class="demo2"></nav>
+        <p><b><i>Chân thành cảm ơn em rất nhiều!</i></b></p>
         <script>
         var display = {display};
-        var colu = ["id","ma_cau_hoi","cau_hoi","tra_loi"];
+        var colu = ["id","ma_cau_hoi","tra_loi","cau_hoi","ma_nhom_cau_hoi"];
     var $$ = function(id) {{
         return document.getElementById(id);
     }},
@@ -157,17 +157,28 @@ Chúng tôi đang tìm hiểu về những khó khăn tâm lý của học sinh 
         currentColClassName: 'currentCol',
         autoWrapRow: true,
         rowHeaders: true,
-        colHeaders: ["Id","Mã câu hỏi","Câu hỏi","Trả lời"],
-        columns: [{{readOnly: true}},{{readOnly: true}},{{readOnly: true}},
+        colHeaders: ["Id","Mã câu hỏi","Trả lời","Câu hỏi","Nhóm"],
+        columns: [{{readOnly: true}},{{readOnly: true}},{{}},
         {{    
-            type: 'dropdown',source:['Hoàn toàn sai','Sai','Không đúng cũng không sai','Đúng','Hoàn toàn đúng']
-        }}],
-        //colWidths: [0.1,50,200,50,50,50,50],		
+            type:'numeric',readOnly: true,renderer: 'html'
+        }},{{readOnly: true}}],
+        colWidths: [0.1,0.1,10,300,0.1],		
         manualColumnResize: true,
         manualRowResize: true,		
         autoColumnSize : true,
+		    cells: function(row, col, prop) {{
+      var cellProperties = {{}};
+
+      if (row === 0) {{
+        cellProperties.readOnly = true;
+      }}
+
+      return cellProperties;
+    }},
+	  //mergeCells: [
+    //{{row: 0, col: 2, rowspan: 1, colspan: 2}},    
+  //],
         stretchH: 'all',	
-        hiddenColumns: true,			
         minSpareCols: 0,
         minSpareRows: 1,
         contextMenu: true,
@@ -224,7 +235,7 @@ Chúng tôi đang tìm hiểu về những khó khăn tâm lý của học sinh 
                 loadPage(page_num);                        
                 autosaveNotification = setTimeout(function () {{
                     $console.text('Changes will be autosaved ');
-                }}, 1000);
+                }}, 500);
             }}
         }});
         request.fail(function (jqXHR, textStatus) {{
@@ -355,6 +366,7 @@ $parent.find('input[name=autosave]').click(function () {{
 hot.selectCell(3,3);
 //hot.updateSettings({{columns: [{{data:1}},{{data:2,type:"password"}},{{data:3}},{{data:4}},{{data:5}},{{data:6}}] }});
 
+
 function loadPage(page_num){{
 
     $.ajax({{
@@ -427,6 +439,72 @@ function loadPage(page_num){{
         }}
     }});    
 }};
+function firstRowRenderer(instance, td, row, col, prop, value, cellProperties) {{
+  Handsontable.renderers.TextRenderer.apply(this, arguments);
+  td.style.fontWeight = 'bold';
+  td.style.color = 'green';
+  td.style.background = '#CEC';
+}}
+
+function safeHtmlRenderer(instance, td, row, col, prop, value, cellProperties) {{
+  var escaped = Handsontable.helper.stringify(value);
+  escaped = strip_tags(escaped, '<em><b><strong><a><big>'); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
+  td.innerHTML = escaped;
+
+  return td;
+}}
+
+function coverRenderer (instance, td, row, col, prop, value, cellProperties) {{
+  var escaped = Handsontable.helper.stringify(value),
+    img;
+
+ if (escaped.indexOf('http') === 0) {{
+    img = document.createElement('IMG');
+    img.src = value;
+
+    Handsontable.dom.addEvent(img, 'mousedown', function (e){{
+      e.preventDefault(); // prevent selection quirk
+    }});
+
+    Handsontable.dom.empty(td);
+    td.appendChild(img);
+  }}
+  else {{
+    // render as text
+    Handsontable.renderers.TextRenderer.apply(this, arguments);
+  }}
+
+  return td;
+}}
+  hot.updateSettings({{
+    cells: function (row, col) {{
+      var cellProperties = {{}};
+		var rowCheck = hot.getData()[row][4];
+      if (rowCheck=== 'ch') {{
+        cellProperties.readOnly = true;
+		cellProperties.renderer = firstRowRenderer;
+      }}
+	  else{{
+		cellProperties.type = 'dropdown';
+        if (rowCheck ==='11'||rowCheck ==='12'){{
+			cellProperties.source = [0,1,2,3,4,5,6,7,8,9];
+		}}
+        else if (rowCheck ==='18'){{
+			cellProperties.source = [0,1,2,3,4];
+		}}
+        else{{
+			cellProperties.source = [0,1,2,3];
+		}}
+		
+		cellProperties.strict = true;
+		cellProperties.allowInvalid = false;
+	  }}
+  
+      return cellProperties;
+    }}
+  }},
+
+  );
 
 </script>
 </body>

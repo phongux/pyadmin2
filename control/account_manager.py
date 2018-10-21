@@ -65,10 +65,11 @@ def application(environment, start_response):
                 display = 200
             else:
                 display = post['display']
-            loadurl = f"""'{load}/load_ket_qua_trac_nghiem_neo'"""
+            loadurl = f"""'{load}/load_account_manager'"""
+            saveurl = f"""'{save}/save_account_manager'"""
             page = ""
             page += head
-            page += "<title>NEO</title>"
+            page += "<title>Account manager</title>"
             page += headlink
             page += """
                 </head>
@@ -82,7 +83,7 @@ def application(environment, start_response):
             # for in this case need add more filter duplicate row in table home;
             page += f"""
                 <br /><br /><br />
-                <h2>Trac nghiem NEO </h2>
+                <h2>Thiết lập tài khoản</h2>
                 <p> Account : {user} </p>
                 <br />
         <p>
@@ -105,7 +106,7 @@ def application(environment, start_response):
         <nav class="demo2"></nav>
         <script>
         var display = {display};
-        var colu = ["ten_nhom", "diem_so","thang_do", "dien_giai", "huong_nghiep"];
+        var colu = ["id","gmail","account_password","team","fullname","gender","depart","company","birthday"];
     var $$ = function(id) {{
         return document.getElementById(id);
     }},
@@ -117,24 +118,107 @@ def application(environment, start_response):
     hot;
     hot = new Handsontable($container[0], {{
         columnSorting: true,
-        startRows: 3,
+        startRows: 1,
         startCols: 3,
         currentRowClassName: 'currentRow',
         currentColClassName: 'currentCol',
         autoWrapRow: true,
         rowHeaders: true,
-        colHeaders: ["Tên nhóm","Diem","Thang đo", "Diễn giải", "Hướng nghiệp"],
-        columns: [{{readOnly: true}},{{readOnly: true}},{{readOnly: true}},{{readOnly: true}},{{readOnly: true}}],
-        colWidths: [50,15,20,300,300],		
+        colHeaders: ["id","email","Mật khẩu","Nhóm","Họ và tên","Giới tính","Lớp học(Bộ phận)","Trường học (cty)","Ngày sinh"],
+        columns: [{{readOnly: true}},{{}},{{}},{{}},{{}},{{}},{{}},{{}},{{}}],
+        colWidths: [0.1,30,30,30,30,30,30,30,30],       
         manualColumnResize: true,
-        manualRowResize: true,		
+        manualRowResize: true,      
         autoColumnSize : true,
-        stretchH: 'all',	
-        hiddenColumns: true,			
+        stretchH: 'all',    
+        hiddenColumns: true,            
         minSpareCols: 0,
-        minSpareRows: 1,
-        contextMenu: true
-    }});
+        minSpareRows: 0,
+        contextMenu: true,beforeRemoveRow: function(index, amount) {{
+                var dellist=[];
+                for(var i=0; i<amount; i++){{
+                    dellist.push(hot.getData()[index +i][colu.indexOf("id")]);
+                }}
+                $.ajax({{
+                    url: {saveurl},
+                    data: {{delete:dellist}}, // returns all cells' data
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function(res) {{
+                    if (res.result === 'ok') {{
+                        $console.text('Data saved');
+                        var page_num = parseInt(document.getElementById("page_number").innerText);
+                        loadPage(page_num);
+                    }}
+                    else {{
+                        $console.text('Save error');
+                    }}
+                }},
+                error: function () {{
+                    $console.text('Save error');
+                }}
+            }});        
+        }},              
+        afterChange: function (change, source) {{
+            var data;
+            if (source === 'loadData' || !$parent.find('input[name=autosave]').is(':checked')) {{
+                return;
+            }}
+            data = change[0];
+            var update = [],insert=[],rows=[],unique=[];
+            for (var i=0;i<change.length;i++){{
+                if (hot.getData()[change[i][0]][colu.indexOf("id")] == null){{
+                    rows.push(change[i][0]);
+                }}
+                else{{
+                    update.push({{"id":hot.getData()[change[i][0]][colu.indexOf("id")],"column":colu[change[i][1]],"value":change[i][3]}});
+                }}
+            }}
+            if (rows.length >0) {{  
+                for(var i in rows){{
+                    if(unique.indexOf(rows[i]) === -1){{
+                        unique.push(rows[i]);
+                    }}
+                }}                
+                for (var i in unique){{
+                    var son = {{}};
+                    for (var k in colu){{
+                        son[colu[k]] = hot.getData()[unique[i]][k]
+                    }}
+                    insert.push(son);
+                }}
+            }}
+            // transform sorted row to original row
+            //data[0] = hot.sortIndex[data[0]] ? hot.sortIndex[data[0]][0] : data[0];
+            clearTimeout(autosaveNotification);
+            $.ajax({{
+                url: {saveurl},
+                dataType: 'json',
+                type: 'POST',
+                data: {{
+                    update:update,
+                    lenupdate:update.length
+                }},
+                success: function (res) {{
+                    if (res.result === 'ok') {{
+                        var page_num = parseInt(document.getElementById("page_number").innerText);
+                        loadPage(page_num);                        
+                        autosaveNotification = setTimeout(function () {{
+                            $console.text('Changes will be autosaved ');
+                        }}, 500);
+                    }}
+                    else{{
+                        $console.html("<font color='red'>Data save error</font>");}}
+                    }},
+                    error: function (res) {{
+                        autosaveNotification = setTimeout(function () {{
+                            $console.html("<font color='red'>Data save error:</font>");
+                        }}, 
+                        500);
+                    }}
+                }});
+            }}
+        }});
     
     $parent.find('button[name=load]').click(function () {{
         $.ajax({{
@@ -145,7 +229,7 @@ def application(environment, start_response):
                 }})
             ),
             dataType: 'json',
-            type: 'POST',					
+            type: 'POST',                   
             success: function (res) {{
                 var data = [], row;
                 for (var i = 0, ilen = res.product.length; i < ilen; i++) {{

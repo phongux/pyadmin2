@@ -159,7 +159,7 @@ def application(environment, start_response):
         {{    
             type: 'checkbox'
         }}],
-        //colWidths: [0.1,50,200,50,50,50,50],		
+        colWidths: [0.1,0.1,200,10],		
         manualColumnResize: true,
         manualRowResize: true,		
         autoColumnSize : true,

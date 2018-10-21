@@ -52,7 +52,7 @@ def get_account(user, passwd, captra):
 def count_rows(user):
     con = get_conection()
     cur = con.cursor()
-    cur.execute(f"""select count(*) from tra_loi_sang_loc_tam_ly where account=%s""", (user,))
+    cur.execute(f"""select count(*) from account where username=%s""", (user,))
     rows_count = cur.fetchone()
     con.commit()
     cur.close()
@@ -64,9 +64,7 @@ def get_rows(display, start_w, user):
     con = get_conection()
     cur = con.cursor()
     cur.execute(
-        f"""select b.id,b.ma_cau_hoi,tra_loi,a.cau_hoi,ma_nhom_cau_hoi from (select ma_cau_hoi,cau_hoi,ma_nhom_cau_hoi from cau_hoi_sang_loc_tam_ly) as a left outer join
-(select id, ma_cau_hoi,tra_loi from tra_loi_sang_loc_tam_ly where account=%s) as b
-on a.ma_cau_hoi = b.ma_cau_hoi order by b.id limit {display} offset {start_w}""", (user,))
+        f"""select id,gmail,account_password,team,fullname,gender,depart,company,birthday from account where username=%s""", (user,))
     rows = cur.fetchall()
     con.commit()
     cur.close()
@@ -112,7 +110,7 @@ def application(environment, start_response):
                 row.append(list(ro))
             page = '{"product":'
             objects_list = []
-            cols = ["id", "ma_cau_hoi", "tra_loi", "cau_hoi", "ma_nhom_cau_hoi"]
+            cols = ["id","gmail","account_password","team","fullname","gender","depart","company","birthday"]
             with ThreadPoolExecutor(max_workers=1) as executor:
                 futures = [executor.submit(convert_row, i, row, cols) for i in range(len(row))]
                 for future in as_completed(futures):

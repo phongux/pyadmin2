@@ -153,7 +153,7 @@ def application(environment, start_response):
         {{    
             type: 'dropdown',source:['Hoàn toàn sai','Sai','Không đúng cũng không sai','Đúng','Hoàn toàn đúng']
         }}],
-        //colWidths: [0.1,50,200,50,50,50,50],		
+        colWidths: [0.1,0.1,300,20],		
         manualColumnResize: true,
         manualRowResize: true,		
         autoColumnSize : true,

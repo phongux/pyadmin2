@@ -289,12 +289,12 @@ def application(environment, start_response):
                     send_data = ""
                 hidefilter = ""
                 hidefilter += """
-    				<div class="btn-group">
-				        <button data-toggle="dropdown" class="btn dropdown-toggle"  data-placeholder="Hide filter">
-					        Hide filter <span class="caret"></span>
-				        </button>
-					    <ul id="sortable3" class="connectedSortable dropdown-menu">
-					"""
+                    <div class="btn-group">
+                        <button data-toggle="dropdown" class="btn dropdown-toggle"  data-placeholder="Hide filter">
+                            Hide filter <span class="caret"></span>
+                        </button>
+                        <ul id="sortable3" class="connectedSortable dropdown-menu">
+                    """
                 for colsname in colslist:
                     colsname_re = colsname.title().replace("_", " ")
                     if colsname in hidefils:
@@ -314,9 +314,9 @@ def application(environment, start_response):
                                 </label></li>"""
 
                 hidefilter += """
-					  <!-- Other items -->
-					</ul>
-				</div>"""
+                      <!-- Other items -->
+                    </ul>
+                </div>"""
                 columns = []
                 for colname in cols:
                     if colname == 'id':
@@ -341,8 +341,8 @@ def application(environment, start_response):
                 page += "<title>Admin</title>"
                 page += headlink
                 page += """
-    				</head>
-	    			<body>"""
+                    </head>
+                    <body>"""
                 page += menuhead
                 if int(ps[0][2]) == 2:
                     page += menuadmin
@@ -360,30 +360,30 @@ def application(environment, start_response):
                         f"delete from {table} where id not in (select max(id) from {table} group by report_date,agent)")
                 page += f"""
                     <br /><br /><br />
-				    <ul class="nav nav-tabs">
-						<li class="active"><a href="{pyadmin.module.control}/account_manager">{table}</a></li>
-					</ul>
-					<h2>Table {table} </h2>
-    				Order by: {",".join(orderby)}. Sort by: {by}. Hide columns: {",".join(hidecols)}	
-    				| Hide filter: {",".join(hidefils)} + {movecols}  
-    				<br />
-				    <nav class='navbar navbar-default'>
-					<form method="post" action="">								
-					    <div class="btn-group col-sm-3">
-						    <label class='btn-group' >Table:
-								<input class='btn-group form-control' list="table" name="table" value="{table}"  onchange='if(this.value != 0) {{ this.form.submit(); }}'>
-							    <datalist id="table">
-									{ops}
-								</datalist>
-							</label> 
-						</div> 	
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="{pyadmin.module.control}/account_manager">{table}</a></li>
+                    </ul>
+                    <h2>Table {table} </h2>
+                    Order by: {",".join(orderby)}. Sort by: {by}. Hide columns: {",".join(hidecols)}    
+                    | Hide filter: {",".join(hidefils)} + {movecols}  
+                    <br />
+                    <nav class='navbar navbar-default'>
+                    <form method="post" action="">                              
+                        <div class="btn-group col-sm-3">
+                            <label class='btn-group' >Table:
+                                <input class='btn-group form-control' list="table" name="table" value="{table}"  onchange='if(this.value != 0) {{ this.form.submit(); }}'>
+                                <datalist id="table">
+                                    {ops}
+                                </datalist>
+                            </label> 
+                        </div>  
                         <!--<select id="example-single-selected">
                             <option value="">test</option>
                             <option value="">test</option>
                         </select>-->
                         <div class="btn-group">
                         <button data-toggle="dropdown" class="btn dropdown-toggle"  data-placeholder="Move columns">
-	                        Move columns <span class="caret"></span>
+                            Move columns <span class="caret"></span>
                         </button>
                         <ul id="sortable6" class="connectedSortable dropdown-menu">"""
                 for colsname in colslist:
@@ -398,10 +398,10 @@ def application(environment, start_response):
                 page += """
                     <!-- Other items -->
                     </ul>
-                    </div>									 								
+                    </div>                                                                  
                     <div class="btn-group">
                     <button data-toggle="dropdown" class="btn dropdown-toggle"  data-placeholder="Hide column">
-	                    Hide columns <span class="caret"></span>
+                        Hide columns <span class="caret"></span>
                     </button>
                     <ul id="sortable1" class="connectedSortable dropdown-menu">"""
                 for colsname in colslist:
@@ -416,10 +416,10 @@ def application(environment, start_response):
                 page += """
                     <!-- Other items -->
                     </ul>
-                    </div>	
+                    </div>  
                     <div class="btn-group">
                         <button data-toggle="dropdown" class="btn dropdown-toggle"  data-placeholder="Order by">
-	                        Order by <span class="caret"></span>
+                            Order by <span class="caret"></span>
                         </button>
                     <ul id="sortable2" class="connectedSortable dropdown-menu">"""
                 for colsname in colslist:
@@ -433,10 +433,10 @@ def application(environment, start_response):
                 page += f"""
                     <!-- Other items -->
                     </ul>
-                    </div>	
+                    </div>  
                     <div class="btn-group">
                         <button data-toggle="dropdown" class="btn dropdown-toggle"  data-placeholder="Sort by">
-	                        Sort by <span class="caret"></span>
+                            Sort by <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                             <li class="ui-state-default">
@@ -454,33 +454,33 @@ def application(environment, start_response):
                         {hidefilter}
                         {grofil}
                     </div>Show filter 
-				        <input class="btn-group" type="checkbox" onclick="myFunction()"/>
-			            <div class="btn-group col-sm-2">
-				        <input class="btn-group form-control mr-sm-3" type="number" name ="display" value = {display} />
-				    </div>
-				    <input type="submit" id ="chon" value="Chon" />
-				</div>
-			</form>
-			</nav>
-    	    <p>
-		        <button name="load" id="load_dog">Load</button>
-		        <button name="reset">Reset</button>
-		        <label>
-		            <input id="autosave" type="checkbox" name="autosave" checked="checked" autocomplete="off">
-		            Autosave
-		        </label>
-	        </p>
-		    <div>
-		        <span class="page2">No page selected</span> |
-	            <strong>
-	                <span id="exampleConsole" class="console">
-	                    Click "Load" to load data from server 
-	                </span>
-	            </strong> 
-	        </div>
-	        <div id="example1" style="width:100%; height: 500px; overflow: hidden"></div>
-	        <nav class="demo2"></nav>
-        	<script>"""
+                        <input class="btn-group" type="checkbox" onclick="myFunction()"/>
+                        <div class="btn-group col-sm-2">
+                        <input class="btn-group form-control mr-sm-3" type="number" name ="display" value = {display} />
+                    </div>
+                    <input type="submit" id ="chon" value="Chon" />
+                </div>
+            </form>
+            </nav>
+            <p>
+                <button name="load" id="load_dog">Load</button>
+                <button name="reset">Reset</button>
+                <label>
+                    <input id="autosave" type="checkbox" name="autosave" checked="checked" autocomplete="off">
+                    Autosave
+                </label>
+            </p>
+            <div>
+                <span class="page2">No page selected</span> |
+                <strong>
+                    <span id="exampleConsole" class="console">
+                        Click "Load" to load data from server 
+                    </span>
+                </strong> 
+            </div>
+            <div id="example1" style="width:100%; height: 500px; overflow: hidden"></div>
+            <nav class="demo2"></nav>
+            <script>"""
                 for hids in hidefils:
                     page += f"""$("#fil{hids}").click();"""
                 # for c in cols:
@@ -503,7 +503,7 @@ def application(environment, start_response):
                     }} else {{
                         x.style.display = 'none';
                     }}
-                }}			
+                }}          
                 $( function() {{
                     $( "#sortable1, #sortable2,#sortable3,#sortable5 ,#sortable6").sortable({{
                         connectWith: ".connectedSortable"
@@ -520,7 +520,7 @@ def application(environment, start_response):
                     callback(false);
                 }}
             }}, 1000);
-        }};				
+        }};             
         emptyValidator = function(value, callback) {{
             setTimeout(function(){{
             if (isEmpty(value)) {{ // isEmpty is a function that determines emptiness, you should define it
@@ -529,135 +529,135 @@ def application(environment, start_response):
                 callback(fasle);
             }}
             }}, 1000);    
-        }}	    
+        }}      
 
         var $$ = function(id) {{
             return document.getElementById(id);
         }},
         autosave = $$('autosave'),
-		$container = $("#example1"),
-		$console = $("#exampleConsole"),
-		$parent = $container.parent(),
-		autosaveNotification,
-		hot;
-    	hot = new Handsontable($container[0], {{
-		    columnSorting: true,
-		    startRows: 8,
-		    startCols: 3,
+        $container = $("#example1"),
+        $console = $("#exampleConsole"),
+        $parent = $container.parent(),
+        autosaveNotification,
+        hot;
+        hot = new Handsontable($container[0], {{
+            columnSorting: true,
+            startRows: 8,
+            startCols: 3,
             currentRowClassName: 'currentRow',
             currentColClassName: 'currentCol',
             autoWrapRow: true,
-		    rowHeaders: true,
+            rowHeaders: true,
             colHeaders: {str(colHeaders)},
             columns: {str(columns)},
-            colWidths: [0.1,50,50,50,50,50,50],		
+            colWidths: [0.1,50,50,50,50,50,50],     
             manualColumnResize: true,
-            manualRowResize: true,		
+            manualRowResize: true,      
             autoColumnSize : true,
-            stretchH: 'all',	
-            hiddenColumns: true,			
-		    minSpareCols: 0,
-		    minSpareRows: 1,
-		    contextMenu: true,
-			beforeRemoveRow: function(index, amount) {{
-			    var dellist=[];
-			    for(var i=0; i<amount; i++){{
-			        dellist.push(hot.getData()[index +i][colu.indexOf("id")]);
-			    }}
-			    //alert(dellist);
-				$.ajax({{
-					url: {saveurl},
-					data: {{delete:dellist,table:"{table}"}}, // returns all cells' data
-					dataType: 'json',
-					type: 'POST',
-					success: function(res) {{//alert(res);
-					if (res.result === 'ok') {{
-						$console.text('Data saved');
-						//document.getElementById("load_dog").click();
-						var page_num = parseInt(document.getElementById("page_number").innerText);
-						loadPage(page_num);
-					}}
-					else {{
-						$console.text('Save error');
-					}}
-				}},
-				error: function () {{
-				    $console.text('Save error');
-				}}
-			}});        
-		}},              
-		afterChange: function (change, source) {{
-			var data;
-			if (source === 'loadData' || !$parent.find('input[name=autosave]').is(':checked')) {{
-			    return;
-			}}
-			data = change[0];
-			var update = [],insert=[],rows=[],unique=[];
-			for (var i=0;i<change.length;i++){{
-				if (hot.getData()[change[i][0]][colu.indexOf("id")] == null){{
-					rows.push(change[i][0]);
-				}}
-				else{{
-					update.push({{"id":hot.getData()[change[i][0]][colu.indexOf("id")],"column":colu[change[i][1]],"value":change[i][3]}});
-				}}
-			}}
-			if (rows.length >0) {{	
-				for(var i in rows){{
-					if(unique.indexOf(rows[i]) === -1){{
-						unique.push(rows[i]);
-					}}
-				}}                
-				for (var i in unique){{
-					var son = {{}};
-					for (var k in colu){{
-						son[colu[k]] = hot.getData()[unique[i]][k]
-					}}
-					insert.push(son);
-				}}
-			}}
-			// transform sorted row to original row
-			//data[0] = hot.sortIndex[data[0]] ? hot.sortIndex[data[0]][0] : data[0];
-			clearTimeout(autosaveNotification);
-			$.ajax({{
-                url: {saveurl},
-			    dataType: 'json',
-			    type: 'POST',
-			    //data: {{"changes": change}}, // contains changed cells' data
-			    data: {{
-			        update:update,
-			        insert:insert,
-			        lenupdate:update.length,
-			        leninsert:insert.length,
-			        table:"{table}",
-			        cols:{str(cols)}
-			    }},
-			    success: function (res) {{
-			        if (res.result === 'ok') {{
-			            //alert(res);
-				        //$console.text('Autosaved (' + change.length + ' cell' + (change.length > 1 ? 's' : '') + ')');
+            stretchH: 'all',    
+            hiddenColumns: true,            
+            minSpareCols: 0,
+            minSpareRows: 1,
+            contextMenu: true,
+            beforeRemoveRow: function(index, amount) {{
+                var dellist=[];
+                for(var i=0; i<amount; i++){{
+                    dellist.push(hot.getData()[index +i][colu.indexOf("id")]);
+                }}
+                //alert(dellist);
+                $.ajax({{
+                    url: {saveurl},
+                    data: {{delete:dellist,table:"{table}"}}, // returns all cells' data
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function(res) {{//alert(res);
+                    if (res.result === 'ok') {{
+                        $console.text('Data saved');
                         //document.getElementById("load_dog").click();
-						var page_num = parseInt(document.getElementById("page_number").innerText);
-						loadPage(page_num);                        
-				        autosaveNotification = setTimeout(function () {{
-				            $console.text('Changes will be autosaved ');
-				        }}, 1000);
+                        var page_num = parseInt(document.getElementById("page_number").innerText);
+                        loadPage(page_num);
+                    }}
+                    else {{
+                        $console.text('Save error');
+                    }}
+                }},
+                error: function () {{
+                    $console.text('Save error');
+                }}
+            }});        
+        }},              
+        afterChange: function (change, source) {{
+            var data;
+            if (source === 'loadData' || !$parent.find('input[name=autosave]').is(':checked')) {{
+                return;
+            }}
+            data = change[0];
+            var update = [],insert=[],rows=[],unique=[];
+            for (var i=0;i<change.length;i++){{
+                if (hot.getData()[change[i][0]][colu.indexOf("id")] == null){{
+                    rows.push(change[i][0]);
+                }}
+                else{{
+                    update.push({{"id":hot.getData()[change[i][0]][colu.indexOf("id")],"column":colu[change[i][1]],"value":change[i][3]}});
+                }}
+            }}
+            if (rows.length >0) {{  
+                for(var i in rows){{
+                    if(unique.indexOf(rows[i]) === -1){{
+                        unique.push(rows[i]);
+                    }}
+                }}                
+                for (var i in unique){{
+                    var son = {{}};
+                    for (var k in colu){{
+                        son[colu[k]] = hot.getData()[unique[i]][k]
+                    }}
+                    insert.push(son);
+                }}
+            }}
+            // transform sorted row to original row
+            //data[0] = hot.sortIndex[data[0]] ? hot.sortIndex[data[0]][0] : data[0];
+            clearTimeout(autosaveNotification);
+            $.ajax({{
+                url: {saveurl},
+                dataType: 'json',
+                type: 'POST',
+                //data: {{"changes": change}}, // contains changed cells' data
+                data: {{
+                    update:update,
+                    insert:insert,
+                    lenupdate:update.length,
+                    leninsert:insert.length,
+                    table:"{table}",
+                    cols:{str(cols)}
+                }},
+                success: function (res) {{
+                    if (res.result === 'ok') {{
+                        //alert(res);
+                        //$console.text('Autosaved (' + change.length + ' cell' + (change.length > 1 ? 's' : '') + ')');
+                        //document.getElementById("load_dog").click();
+                        var page_num = parseInt(document.getElementById("page_number").innerText);
+                        loadPage(page_num);                        
+                        autosaveNotification = setTimeout(function () {{
+                            $console.text('Changes will be autosaved ');
+                        }}, 1000);
                     }}
                     else{{
                         $console.html("<font color='red'>Data save error</font>");}}
-			        }},
-			        error: function (res) {{
-			            autosaveNotification = setTimeout(function () {{
-			                $console.html("<font color='red'>Data save error:</font>");
-			            }}, 
-			            1000);
-        			}}
-			    }});
+                    }},
+                    error: function (res) {{
+                        autosaveNotification = setTimeout(function () {{
+                            $console.html("<font color='red'>Data save error:</font>");
+                        }}, 
+                        1000);
+                    }}
+                }});
             }}
-		}});
-		
-		$parent.find('button[name=load]').click(function () {{
-		    $.ajax({{
-			    url: {loadurl},
+        }});
+        
+        $parent.find('button[name=load]').click(function () {{
+            $.ajax({{
+                url: {loadurl},
                 data: JSON.parse(
                     JSON.stringify({{
                         types:{str(types)},
@@ -671,7 +671,7 @@ def application(environment, start_response):
                     }})
                 ),
                 dataType: 'json',
-                type: 'POST',					
+                type: 'POST',                   
                 success: function (res) {{
                     var data = [], row;
                     for (var i = 0, ilen = res.product.length; i < ilen; i++) {{

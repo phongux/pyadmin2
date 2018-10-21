@@ -40,7 +40,7 @@ def update_rows(post, table, user):
                     con = get_connection()
                     cur = con.cursor()
                     cur.execute(f"""update {table} set {post[
-                                'update[%s][column]' % i]} = NULLIF(%s,'false'), update_time = %s  where id = %s and account=%s""",
+                                'update[%s][column]' % i]} = NULLIF(%s,'')::int, update_time = %s  where id = %s and account=%s and ma_cau_hoi !='ch'""",
                                 (post['update[%s][value]' % i], datetime.datetime.today(), post['update[%s][id]' % i],
                                  user))
                     con.commit()
@@ -65,7 +65,7 @@ def application(environment, start_response):
         user = session['username']
         passwd = session['password']
         captra = session['captra']
-        table = 'tra_loi_neo'
+        table = 'tra_loi_sang_loc_tam_ly'
         ps = get_account(user, passwd, captra)
         if ps[0][2] > 0:
             update_rows(post, table, user)

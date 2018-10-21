@@ -27,7 +27,7 @@ def get_account(user, passwd):
     con = psycopg2.connect(conn)
     cur = con.cursor()
     cur.execute(
-        "select username,account_password,account_level,gender,company,depart,birthday from account where username=%s and account_password=%s ",
+        "select username,account_password,account_level,gender,company,depart,birthday,id from account where username=%s and account_password=%s ",
         (user, hashlib.sha512(passwd.encode('utf-8')).hexdigest(),))
     ps = cur.fetchall()
     con.commit()
@@ -74,19 +74,20 @@ def application(environ, start_response):
                 session['company'] = ps[0][4]
                 session['depart'] = ps[0][5]
                 session['birthday'] = ps[0][6]
+                session['id'] = ps[0][7]
                 session['captra'] = post['g-recaptcha-response']
                 update_captra(post['g-recaptcha-response'], user, hashlib.sha512(passwd.encode('utf-8')).hexdigest())
                 session.save()
                 page = f"""
-                    <!doctype html>
-                    <html>
-                            <head>
-                                <meta http-equiv="refresh" content="0; url=/wsgi/pyadmin/index"/>
-                                <title> redirect login </title>
-                            </head>	
-                        <body>
-                        </body>
-                    </html>"""
+                        <!doctype html>
+                        <html>
+                                <head>
+                                    <meta http-equiv="refresh" content="0; url=/wsgi/pyadmin/index"/>
+                                    <title> redirect login </title>
+                                </head>	
+                            <body>
+                            </body>
+                        </html>"""
         else:
             page = f"{pyadmin.login.loginform}"
 
