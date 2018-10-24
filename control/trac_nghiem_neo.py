@@ -153,14 +153,14 @@ def application(environment, start_response):
         {{    
             type: 'dropdown',source:['Hoàn toàn sai','Sai','Không đúng cũng không sai','Đúng','Hoàn toàn đúng']
         }}],
-        colWidths: [0.1,0.1,300,20],		
+        colWidths: [0.1,0.1,300,50],		
         manualColumnResize: true,
         manualRowResize: true,		
         autoColumnSize : true,
         stretchH: 'all',	
         hiddenColumns: true,			
         minSpareCols: 0,
-        minSpareRows: 1,
+        minSpareRows: 0,
         contextMenu: true,
     afterChange: function (change, source) {{
         var data;

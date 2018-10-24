@@ -118,7 +118,7 @@ def application(environment, start_response):
     hot;
     hot = new Handsontable($container[0], {{
         columnSorting: true,
-        startRows: 3,
+        startRows: 1,
         startCols: 3,
         currentRowClassName: 'currentRow',
         currentColClassName: 'currentCol',
@@ -133,7 +133,7 @@ def application(environment, start_response):
         stretchH: 'all',	
         hiddenColumns: true,			
         minSpareCols: 0,
-        minSpareRows: 1,
+        minSpareRows: 0,
         contextMenu: true
     }});
     

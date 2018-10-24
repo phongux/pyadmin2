@@ -166,7 +166,7 @@ def application(environment, start_response):
         stretchH: 'all',	
         hiddenColumns: true,			
         minSpareCols: 0,
-        minSpareRows: 1,
+        minSpareRows: 0,
         contextMenu: true,
     afterChange: function (change, source) {{
         var data;

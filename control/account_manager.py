@@ -106,7 +106,7 @@ def application(environment, start_response):
         <nav class="demo2"></nav>
         <script>
         var display = {display};
-        var colu = ["id","gmail","account_password","team","fullname","gender","depart","company","birthday"];
+        var colu = ["id","gmail","account_password","fullname","gender","depart","company","birthday"];
     var $$ = function(id) {{
         return document.getElementById(id);
     }},
@@ -124,9 +124,9 @@ def application(environment, start_response):
         currentColClassName: 'currentCol',
         autoWrapRow: true,
         rowHeaders: true,
-        colHeaders: ["id","email","Mật khẩu","Nhóm","Họ và tên","Giới tính","Lớp học(Bộ phận)","Trường học (cty)","Ngày sinh"],
-        columns: [{{readOnly: true}},{{}},{{}},{{}},{{}},{{}},{{}},{{}},{{}}],
-        colWidths: [0.1,30,30,30,30,30,30,30,30],       
+        colHeaders: ["id","email","Mật khẩu","Họ và tên","Giới tính","Lớp học(Bộ phận)","Trường học (cty)","Ngày sinh"],
+        columns: [{{readOnly: true}},{{}},{{}},{{}},{{}},{{}},{{}},{{}}],
+        colWidths: [0.1,30,30,30,30,30,30,30],       
         manualColumnResize: true,
         manualRowResize: true,      
         autoColumnSize : true,

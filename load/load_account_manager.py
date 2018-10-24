@@ -64,7 +64,7 @@ def get_rows(display, start_w, user):
     con = get_conection()
     cur = con.cursor()
     cur.execute(
-        f"""select id,gmail,account_password,team,fullname,gender,depart,company,birthday from account where username=%s""", (user,))
+        f"""select id,gmail,account_password,fullname,gender,depart,company,birthday from account where username=%s""", (user,))
     rows = cur.fetchall()
     con.commit()
     cur.close()
@@ -110,7 +110,7 @@ def application(environment, start_response):
                 row.append(list(ro))
             page = '{"product":'
             objects_list = []
-            cols = ["id","gmail","account_password","team","fullname","gender","depart","company","birthday"]
+            cols = ["id","gmail","account_password","fullname","gender","depart","company","birthday"]
             with ThreadPoolExecutor(max_workers=1) as executor:
                 futures = [executor.submit(convert_row, i, row, cols) for i in range(len(row))]
                 for future in as_completed(futures):
