@@ -82,7 +82,7 @@ def application(environ, start_response):
                         <!doctype html>
                         <html>
                                 <head>
-                                    <meta http-equiv="refresh" content="0; url=/wsgi/pyadmin/index"/>
+                                    <meta http-equiv="refresh" content="0; url=/wsgi/pyadmin2/index"/>
                                     <title> redirect login </title>
                                 </head>	
                             <body>
