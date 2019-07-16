@@ -1,7 +1,7 @@
-project = "/wsgi/pyadmin"
+project = "/wsgi/pyadmin2"
 control = f"{project}/control"
-js = "/pyadmin/js"
-bootstrap = "/pyadmin/bootstrap"
+js = "/pyadmin2/js"
+bootstrap = "/pyadmin2/bootstrap"
 load = f"{project}/load"
 save = f"{project}/save"
 
