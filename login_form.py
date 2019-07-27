@@ -1,14 +1,21 @@
+#2 line below to set pyadmin2 as document root
+import sys
+sys.path.insert(0,"E:\Projects\pyadmin2")
+###
+import importlib
+import config.module
+
+importlib.reload(config.module)
+bootstrap = config.module.bootstrap
+js = config.module.js
+from config.conn import conn
 def application(environment, start_response):
     from webob import Request, Response
     request = Request(environment)
     params = request.params
     post = request.POST
     res = Response()
-    import importlib
-    import pyadmin.module
-    importlib.reload(pyadmin.module)
-    bootstrap = pyadmin.module.bootstrap
-    js = pyadmin.module.js
+
     page = f"""
         <!doctype html>
         <html>
