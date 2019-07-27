@@ -6,13 +6,13 @@ import psycopg2
 import psycopg2.extras
 import psycopg2.extensions
 import hashlib
-import pyadmin.conn
+import config.conn
 import pyadmin.sess
 
 importlib.reload(pyadmin.sess)
 importlib.reload(pyadmin.conn)
 from pyadmin.conn import conn
-
+# from config.conn import conn
 
 def update_captra(captra, user, passwd):
     conn = psycopg2.connect(pyadmin.conn.conn)

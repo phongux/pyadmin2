@@ -9,8 +9,11 @@ import pyadmin.conn, pyadmin.login
 importlib.reload(pyadmin.conn)
 importlib.reload(pyadmin.login)
 importlib.reload(pyadmin.sess)
+importlib.reload(pyadmin.module)
 from pyadmin.module import head, headlink, menuadmin, menuuser, load, save, menuhead, menufoot
-
+import sys
+sys.path.insert(0,"e:Projects\pyadmin2")
+from config.conn import conn
 
 def get_connection():
     connection = psycopg2.connect(pyadmin.conn.conn)
@@ -338,7 +341,7 @@ def application(environment, start_response):
                 que_re = re.sub('\s+', ' ', que.replace('"', '\\"'))
                 page = ""
                 page += head
-                page += "<title>Admin</title>"
+                page += f"<title>Admin</title>"
                 page += headlink
                 page += """
                     </head>
@@ -541,6 +544,7 @@ def application(environment, start_response):
         autosaveNotification,
         hot;
         hot = new Handsontable($container[0], {{
+            licenseKey: 'non-commercial-and-evaluation',
             columnSorting: true,
             startRows: 8,
             startCols: 3,
